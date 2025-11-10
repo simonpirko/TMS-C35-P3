@@ -12,7 +12,9 @@ public class ChannelService {
     @Autowired
     private ChannelRepository channelRepository;
 
-    public void create(Channel channel){
+    public Channel create(Channel channel){
+        
+        return  channelRepository.save(channel);
 
     }
 }

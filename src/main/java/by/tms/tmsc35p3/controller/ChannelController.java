@@ -17,8 +17,6 @@ public class ChannelController {
 
     @Autowired
     private ChannelService channelService;
-    @Autowired
-    private ChannelRepository channelRepository;
 
     @PostMapping
     public ResponseEntity<Channel> createChannel(@RequestBody ChannelDto dto){
@@ -27,7 +25,7 @@ public class ChannelController {
     channel.setDescription(dto.getDescription());
     channel.setAuthorId(dto.getAuthorId());
 
-    Channel save = channelRepository.save(channel);
+    Channel save = channelService.create(channel);
     return ResponseEntity.ok(save);
 }
 }
