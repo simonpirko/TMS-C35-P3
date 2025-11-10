@@ -1,4 +1,4 @@
-package dto;
+package by.tms.tmsc35p3.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
