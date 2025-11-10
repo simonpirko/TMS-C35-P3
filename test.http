@@ -1,7 +1,0 @@
-POST http://localhost:8080/channel
-Content-Type: application/json
-
-{
-  "title": "Test",
-  "description": "Test"
-}
