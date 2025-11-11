@@ -26,18 +26,14 @@ public class UserController {
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             return ResponseEntity.badRequest().body("Отсутствует токен авторизации");
         }
-
         // Извлекаем сам токен
         String token = authHeader.substring(7);
-
         // Проверяем токен
         if (!jwtService.validateToken(token)) {
             return ResponseEntity.status(401).body("Невалидный токен");
         }
-
         // Извлекаем email из токена
         String email = jwtService.extractUsername(token);
-
         // Ищем пользователя по email
         Optional<User> user = userRepository.findByEmail(email);
         if (user.isEmpty()) {
