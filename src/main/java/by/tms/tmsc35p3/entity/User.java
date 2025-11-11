@@ -28,7 +28,7 @@ public class User {
     @NotBlank
     private String password;
 
-    private boolean isBanned = false;
+    private boolean banned = false;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
