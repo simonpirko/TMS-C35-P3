@@ -1,7 +1,7 @@
-package repository;
+package by.tms.tmsc35p3.repository;
 
 
-import entity.User;
+import by.tms.tmsc35p3.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
