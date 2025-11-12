@@ -1,6 +1,6 @@
-package repository;
+package by.tms.tmsc35p3.repository;
 
-import entity.Role;
+import by.tms.tmsc35p3.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

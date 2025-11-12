@@ -1,4 +1,4 @@
-package entity;
+package by.tms.tmsc35p3.entity;
 
 
 import jakarta.persistence.*;
@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -35,4 +36,7 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL,  orphanRemoval = true)
+    private List<Post> posts;
 }

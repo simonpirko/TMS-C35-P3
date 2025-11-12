@@ -1,4 +1,4 @@
-package entity;
+package by.tms.tmsc35p3.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
