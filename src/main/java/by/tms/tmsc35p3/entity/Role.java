@@ -1,20 +1,12 @@
 package by.tms.tmsc35p3.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
 
-@Entity
-@Table(name = "roles")
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class Role {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public enum Role implements GrantedAuthority {
+    ROLE_USER, ROLE_ADMIN;
 
-    @Column(nullable = false, unique = true)
-    private String name;
+    @Override
+    public String getAuthority() {
+        return name();
+    }
 }
