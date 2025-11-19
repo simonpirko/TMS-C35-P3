@@ -4,8 +4,8 @@ import by.tms.tmsc35p3.dto.CreatePostDto;
 import by.tms.tmsc35p3.dto.UpdatePostDto;
 import by.tms.tmsc35p3.entity.Post;
 import by.tms.tmsc35p3.entity.User;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import by.tms.tmsc35p3.exception.GlobalExceptionHandler;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -14,57 +14,57 @@ import by.tms.tmsc35p3.service.PostService;
 
 import java.util.List;
 
-@RestController("/api/v1/posts")
-@NoArgsConstructor
-@AllArgsConstructor
+@RestController
+@RequestMapping("/api/v1/posts")
+@RequiredArgsConstructor
 public class PostController {
 
-    PostService postService;
-    UserRepository userRepository; //удалить, когда сделают UserService
+    private final PostService postService;
+    private final UserRepository userRepository; // удалить, когда сделают UserService
 
     @PostMapping()
-    public ResponseEntity<Post> createPost(CreatePostDto postDto){
-        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Post post = postService.savePost(postDto, currentUser);
-        return ResponseEntity.ok(post);
+    public ResponseEntity<?> createPost(@RequestBody CreatePostDto postDto){
+        try {
+            User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            Post post = postService.savePost(postDto, currentUser);
+            return ResponseEntity.ok(post);
+        } catch (ClassCastException e) {
+            return GlobalExceptionHandler.createErrorResponse("UNAUTHORIZED", "Пользователь не авторизован");
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Post> getPostById(@PathVariable Long id){
-        if(postService.existsById(id)){
-            Post post = postService.findById(id);
+    public ResponseEntity<?> getPostById(@PathVariable Long id){
+        Post post = postService.findById(id);
         return ResponseEntity.ok(post);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
     }
 
     @GetMapping("/user/{id}")
-    public ResponseEntity<List<Post>> getAllPosts(@PathVariable Long userId){
-        if(userRepository.existsById(userId)){
-            List<Post> posts = postService.findAllByUserId(userId);
-            return ResponseEntity.ok(posts);
-        } else {
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<?> getAllPosts(@PathVariable Long id){
+        if(!userRepository.existsById(id)){
+            return GlobalExceptionHandler.createErrorResponse("NOT_FOUND", "Пользователь с id " + id + " не найден");
         }
+        List<Post> posts = postService.findAllByUserId(id);
+        if(posts.isEmpty()){
+            return GlobalExceptionHandler.createErrorResponse("NOT_FOUND", "Не найдены посты у пользователя с id " + id);
+        }
+        return ResponseEntity.ok(posts);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Post> updatePost(@PathVariable Long id, UpdatePostDto updateDto){
-        if(postService.existsById(id)){
-            Post post = postService.partialPostUpdate(id, updateDto);
-            return ResponseEntity.ok(post);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<?> updatePost(@PathVariable Long id, @RequestBody UpdatePostDto updateDto){
+        Post post = postService.partialPostUpdate(id, updateDto);
+        return ResponseEntity.ok(post);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletePost(@PathVariable Long id){
-        if(postService.existsById(id)){
-            postService.deletePost(id);
-            return ResponseEntity.ok().build();
+        if(!postService.existsById(id)){
+            return GlobalExceptionHandler.createErrorResponse("NOT_FOUND", "Пост с id " + id + " не найден");
         }
-        return ResponseEntity.notFound().build();
+        postService.deletePost(id);
+        return ResponseEntity.ok().build();
     }
 }
