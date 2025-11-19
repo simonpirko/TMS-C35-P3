@@ -1,4 +1,4 @@
-package models;
+package by.tms.tmsc35p3.dto;
 
 import lombok.Builder;
 

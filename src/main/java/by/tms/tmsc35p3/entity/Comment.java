@@ -1,4 +1,4 @@
-package entity;
+package by.tms.tmsc35p3.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -23,7 +23,7 @@ public class Comment {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private Account account;
 
     @Column(name = "text", nullable = false)
     private String text;

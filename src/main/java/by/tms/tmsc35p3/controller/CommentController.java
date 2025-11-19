@@ -1,10 +1,10 @@
-package controller;
+package by.tms.tmsc35p3.controller;
 
+import by.tms.tmsc35p3.service.CommentService;
+import by.tms.tmsc35p3.dto.CommentRequest;
 import lombok.RequiredArgsConstructor;
-import models.CommentRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import service.CommentService;
 
 @RestController
 @RequiredArgsConstructor

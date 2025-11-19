@@ -3,13 +3,13 @@ package by.tms.tmsc35p3.controller;
 import by.tms.tmsc35p3.dto.CreatePostDto;
 import by.tms.tmsc35p3.dto.UpdatePostDto;
 import by.tms.tmsc35p3.entity.Post;
-import by.tms.tmsc35p3.entity.User;
+import by.tms.tmsc35p3.entity.Account;
 import by.tms.tmsc35p3.exception.GlobalExceptionHandler;
+import by.tms.tmsc35p3.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import by.tms.tmsc35p3.repository.UserRepository;
 import by.tms.tmsc35p3.service.PostService;
 
 import java.util.List;
@@ -20,12 +20,12 @@ import java.util.List;
 public class PostController {
 
     private final PostService postService;
-    private final UserRepository userRepository; // удалить, когда сделают UserService
+    private final AccountRepository accountRepository; // удалить, когда сделают UserService
 
     @PostMapping()
     public ResponseEntity<?> createPost(@RequestBody CreatePostDto postDto){
         try {
-            User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            Account currentUser = (Account) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             Post post = postService.savePost(postDto, currentUser);
             return ResponseEntity.ok(post);
         } catch (ClassCastException e) {
@@ -43,7 +43,7 @@ public class PostController {
 
     @GetMapping("/user/{id}")
     public ResponseEntity<?> getAllPosts(@PathVariable Long id){
-        if(!userRepository.existsById(id)){
+        if(!accountRepository.existsById(id)){
             return GlobalExceptionHandler.createErrorResponse("NOT_FOUND", "Пользователь с id " + id + " не найден");
         }
         List<Post> posts = postService.findAllByUserId(id);

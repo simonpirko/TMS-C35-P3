@@ -1,7 +1,7 @@
 package by.tms.tmsc35p3.jwt;
 
 
-import by.tms.tmsc35p3.entity.User;
+import by.tms.tmsc35p3.entity.Account;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -21,9 +21,9 @@ public class JwtService {
         return Keys.hmacShaKeyFor(SECRET.getBytes());
     }
 
-    public String generateToken(User user) {
+    public String generateToken(Account account) {
         return Jwts.builder()
-                .setSubject(user.getEmail())
+                .setSubject(account.getEmail())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
