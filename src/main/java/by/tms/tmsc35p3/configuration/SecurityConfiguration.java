@@ -1,4 +1,4 @@
-package by.tms.tmsc35p3.config;
+package by.tms.tmsc35p3.configuration;
 
 import by.tms.tmsc35p3.filter.SecurityFilter;
 import com.fasterxml.jackson.databind.ObjectMapper;
