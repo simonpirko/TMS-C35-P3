@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import models.CommentRequest;
 import org.springframework.stereotype.Service;
 import repository.CommentRepository;
-import repository.UserRepository;
 
 import java.time.LocalDateTime;
 
