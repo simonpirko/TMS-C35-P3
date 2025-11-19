@@ -1,14 +1,14 @@
-package service;
+package by.tms.tmsc35p3.service;
 
-import dto.LoginRequest;
-import dto.RegisterRequest;
-import entity.Role;
-import entity.User;
+import by.tms.tmsc35p3.dto.LoginRequest;
+import by.tms.tmsc35p3.dto.RegisterRequest;
+import by.tms.tmsc35p3.entity.Role;
+import by.tms.tmsc35p3.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import repository.RoleRepository;
-import repository.UserRepository;
+import by.tms.tmsc35p3.repository.RoleRepository;
+import by.tms.tmsc35p3.repository.UserRepository;
 
 import java.util.Collections;
 
