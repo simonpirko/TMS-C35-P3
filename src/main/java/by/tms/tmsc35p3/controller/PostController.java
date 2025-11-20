@@ -4,6 +4,7 @@ import by.tms.tmsc35p3.dto.CreatePostDto;
 import by.tms.tmsc35p3.dto.UpdatePostDto;
 import by.tms.tmsc35p3.entity.Post;
 import by.tms.tmsc35p3.entity.User;
+import by.tms.tmsc35p3.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ import java.util.List;
 public class PostController {
 
     PostService postService;
-    UserRepository userRepository; //удалить, когда сделают UserService
+    UserService userService; //удалить, когда сделают UserService
 
     @PostMapping()
     public ResponseEntity<Post> createPost(CreatePostDto postDto){
@@ -41,7 +42,7 @@ public class PostController {
 
     @GetMapping("/user/{id}")
     public ResponseEntity<List<Post>> getAllPosts(@PathVariable Long userId){
-        if(userRepository.existsById(userId)){
+        if(userService.existsById(userId)){
             List<Post> posts = postService.findAllByUserId(userId);
             return ResponseEntity.ok(posts);
         } else {
