@@ -36,5 +36,5 @@ public class Post {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "author_id")
-    User author;
+    Account author;
 }

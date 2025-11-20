@@ -1,34 +1,26 @@
 package by.tms.tmsc35p3.service;
 
-import by.tms.tmsc35p3.dto.UpdatePasswordRequest;
-import by.tms.tmsc35p3.entity.User;
-import by.tms.tmsc35p3.exception.IncorrectOldPassword;
-import by.tms.tmsc35p3.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import by.tms.tmsc35p3.entity.Role;
+import by.tms.tmsc35p3.entity.Account;
+import by.tms.tmsc35p3.repository.AccountRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.Set;
 
 @Service
-@RequiredArgsConstructor
 public class UserService {
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
 
-    public void updatePassword(String email, UpdatePasswordRequest request) {
-        Optional<User> user = userRepository.findByEmail(email);
+    @Autowired
+    private AccountRepository userRepository;
 
-        if(!passwordEncoder.matches(request.getOldPassword(), user.get().getPassword())) {
-            throw new IncorrectOldPassword("Неверный существующий пароль");
-        }
-        user.get().setPassword(passwordEncoder.encode(request.getNewPassword()));
-        userRepository.save(user.get());
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    public Account create(Account user) {
+        user.setRoles(Set.of(Role.ROLE_USER));
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        return userRepository.save(user);
     }
-
-    public boolean existsById(Long id){
-        return userRepository.existsById(id);
-    }
-
 }

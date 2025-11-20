@@ -2,8 +2,8 @@ package by.tms.tmsc35p3.service;
 
 import by.tms.tmsc35p3.dto.CreatePostDto;
 import by.tms.tmsc35p3.dto.UpdatePostDto;
+import by.tms.tmsc35p3.entity.Account;
 import by.tms.tmsc35p3.entity.Post;
-import by.tms.tmsc35p3.entity.User;
 import by.tms.tmsc35p3.exception.PostNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -23,10 +23,10 @@ public class PostService {
 
 
     private final PostRepository postRepository;
-    public Post savePost(CreatePostDto postDto, User user){
+    public Post savePost(CreatePostDto postDto, Account account){
 
         Post post = new Post();
-        post.setAuthor(user);
+        post.setAuthor(account);
         post.setTitle(postDto.getTitle());
         post.setText(postDto.getContent());
 
