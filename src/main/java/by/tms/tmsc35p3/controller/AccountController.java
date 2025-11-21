@@ -2,6 +2,7 @@ package by.tms.tmsc35p3.controller;
 
 
 import by.tms.tmsc35p3.dto.AccountDto;
+import by.tms.tmsc35p3.dto.UpdateEmailRequest;
 import by.tms.tmsc35p3.dto.UpdatePasswordRequest;
 import by.tms.tmsc35p3.entity.Account;
 import by.tms.tmsc35p3.exception.GlobalExceptionHandler;
@@ -34,13 +35,27 @@ public class AccountController {
     }
 
     @PatchMapping("/update-password")
-    public ResponseEntity<?> updatePassword(@RequestBody UpdatePasswordRequest updatePasswordRequest,
-                                            @RequestBody Long id) {
+    public ResponseEntity<?> updatePassword(@RequestBody UpdatePasswordRequest updatePasswordRequest) {
         // Когда сделают jwt, Отредачить получение id <<<---
+        long id = 2;
+
         try {
             Account account = userService.updatePassword(id, updatePasswordRequest);
             return ResponseEntity.ok(account);
         } catch (IncorrectOldPassword e) {
+            return GlobalExceptionHandler.createErrorResponse("400", e.getMessage());
+        }
+    }
+
+    @PatchMapping("/update-email")
+    public ResponseEntity<?> updateEmail(@RequestBody UpdateEmailRequest updateEmailRequest) {
+        // Когда сделают jwt, Отредачить получение id <<<---
+        long id = 2;
+
+        try {
+            Account account = userService.updateEmail(id, updateEmailRequest);
+            return ResponseEntity.ok(account);
+        }catch (IncorrectOldPassword e) {
             return GlobalExceptionHandler.createErrorResponse("400", e.getMessage());
         }
     }

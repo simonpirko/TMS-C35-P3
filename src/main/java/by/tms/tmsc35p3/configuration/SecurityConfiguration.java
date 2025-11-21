@@ -13,7 +13,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.access.intercept.AuthorizationFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
@@ -38,13 +37,13 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(c->c
                         .requestMatchers(
                                 "/api/v1/auth/login",
-                                "/api/v1/auth/account")
+                                "/api/v1/auth/account/**")
                         .permitAll()
                         .requestMatchers("/admin/**")
                         .hasRole("ADMIN")
                         .anyRequest()
                         .authenticated())
-                .addFilterAfter(securityFilter, AuthorizationFilter.class)
+                    .addFilterAfter(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
@@ -56,6 +55,7 @@ public class SecurityConfiguration {
             rsp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         };
     }
+
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {

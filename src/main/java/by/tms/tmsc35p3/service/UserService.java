@@ -1,8 +1,10 @@
 package by.tms.tmsc35p3.service;
 
+import by.tms.tmsc35p3.dto.UpdateEmailRequest;
 import by.tms.tmsc35p3.dto.UpdatePasswordRequest;
 import by.tms.tmsc35p3.entity.Role;
 import by.tms.tmsc35p3.entity.Account;
+import by.tms.tmsc35p3.exception.IncorrectOldEmail;
 import by.tms.tmsc35p3.exception.IncorrectOldPassword;
 import by.tms.tmsc35p3.repository.AccountRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -42,6 +44,15 @@ public class UserService {
             throw new IncorrectOldPassword("Неверный текущий пароль");
         }
         account.setPassword(bCryptPasswordEncoder.encode(updatePasswordRequest.getNewPassword()));
+        return userRepository.save(account);
+    }
+
+    public Account updateEmail(Long id, UpdateEmailRequest updateEmailRequest) {
+        Account account = findById(id);
+        if (!account.getEmail().equals(updateEmailRequest.getOldEemail())){
+            throw new IncorrectOldEmail("Неверный текущий email");
+        }
+        account.setEmail(updateEmailRequest.getNewEemail());
         return userRepository.save(account);
     }
 }

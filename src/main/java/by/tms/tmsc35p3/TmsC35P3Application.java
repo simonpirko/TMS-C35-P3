@@ -1,5 +1,6 @@
 package by.tms.tmsc35p3;
 
+import org.flywaydb.core.Flyway;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -28,6 +29,31 @@ public class TmsC35P3Application {
                 } else {
                     System.out.println("Flyway table NOT exists");
                 }
+            }
+        };
+    }
+
+    @Bean
+    public CommandLineRunner debugFlyway(Flyway flyway) {
+        return args -> {
+            System.out.println("=== FLYWAY MIGRATION DEBUG ===");
+
+            // Проверяем доступные миграции
+            var migrations = flyway.info().all();
+            System.out.println("Available migrations: " + migrations.length);
+
+            for (var migration : migrations) {
+                System.out.println("Migration: " + migration.getVersion() +
+                        " - " + migration.getDescription() +
+                        " - State: " + migration.getState());
+            }
+
+            // Проверяем текущую версию
+            var current = flyway.info().current();
+            if (current != null) {
+                System.out.println("Current migration: " + current.getVersion());
+            } else {
+                System.out.println("No migrations applied");
             }
         };
     }
