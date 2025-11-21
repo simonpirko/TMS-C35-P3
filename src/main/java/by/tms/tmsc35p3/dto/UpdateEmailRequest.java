@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateEmailRequest {
-    private String oldEemail;
+    private String oldEmail;
 
     @NotBlank
-    private String newEemail;
+    private String newEmail;
 }

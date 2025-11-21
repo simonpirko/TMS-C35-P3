@@ -37,7 +37,7 @@ public class AccountController {
     @PatchMapping("/update-password")
     public ResponseEntity<?> updatePassword(@RequestBody UpdatePasswordRequest updatePasswordRequest) {
         // Когда сделают jwt, Отредачить получение id <<<---
-        long id = 2;
+        long id = 8;
 
         try {
             Account account = userService.updatePassword(id, updatePasswordRequest);
@@ -50,7 +50,7 @@ public class AccountController {
     @PatchMapping("/update-email")
     public ResponseEntity<?> updateEmail(@RequestBody UpdateEmailRequest updateEmailRequest) {
         // Когда сделают jwt, Отредачить получение id <<<---
-        long id = 2;
+        long id = 8;
 
         try {
             Account account = userService.updateEmail(id, updateEmailRequest);

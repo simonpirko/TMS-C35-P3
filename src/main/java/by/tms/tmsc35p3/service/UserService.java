@@ -49,10 +49,10 @@ public class UserService {
 
     public Account updateEmail(Long id, UpdateEmailRequest updateEmailRequest) {
         Account account = findById(id);
-        if (!account.getEmail().equals(updateEmailRequest.getOldEemail())){
+        if (!account.getEmail().equals(updateEmailRequest.getOldEmail())){
             throw new IncorrectOldEmail("Неверный текущий email");
         }
-        account.setEmail(updateEmailRequest.getNewEemail());
+        account.setEmail(updateEmailRequest.getNewEmail());
         return userRepository.save(account);
     }
 }

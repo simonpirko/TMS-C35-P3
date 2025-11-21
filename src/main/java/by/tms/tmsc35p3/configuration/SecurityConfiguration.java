@@ -36,14 +36,17 @@ public class SecurityConfiguration {
                 .exceptionHandling(c->c.authenticationEntryPoint(authenticationEntryPoint()))
                 .authorizeHttpRequests(c->c
                         .requestMatchers(
+                                // Поменять после реализации jwt-токена
                                 "/api/v1/auth/login",
-                                "/api/v1/auth/account/**")
+                                "/api/v1/auth/account/**",
+                                "/channel", "/api/comments/**",
+                                "api/v1/posts/**")
                         .permitAll()
                         .requestMatchers("/admin/**")
                         .hasRole("ADMIN")
                         .anyRequest()
                         .authenticated())
-                    .addFilterAfter(securityFilter, UsernamePasswordAuthenticationFilter.class)
+                    .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
