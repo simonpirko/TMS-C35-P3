@@ -50,7 +50,6 @@ public class SecurityFilter extends OncePerRequestFilter {
 
                 Account account = new Account();
                 account.setUsername(claimsJws.getBody().getSubject());
-                account.setName(claimsJws.getBody().get("name", String.class));
                 account.setRoles(Set.of(Role.valueOf(claimsJws.getBody().get("role", String.class))));
 
 

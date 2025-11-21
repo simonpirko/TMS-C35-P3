@@ -1,6 +1,6 @@
 package by.tms.tmsc35p3.dto;
 
-
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AccountDto {
+public class UpdateEmailRequest {
+    private String oldEmail;
 
-    private String username;
-    private String email;
-    private String password;
+    @NotBlank
+    private String newEmail;
 }

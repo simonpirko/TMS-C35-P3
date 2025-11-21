@@ -1,6 +1,4 @@
 package by.tms.tmsc35p3.controller;
-
-import by.tms.tmsc35p3.repository.ChannelRepository;
 import by.tms.tmsc35p3.service.ChannelService;
 import by.tms.tmsc35p3.dto.ChannelDto;
 import by.tms.tmsc35p3.entity.Channel;

@@ -1,6 +1,6 @@
-CREATE SEQUENCE comment_seq START 1 INCREMENT 1;
+CREATE SEQUENCE IF NOT EXISTS comment_seq START 1 INCREMENT 1;
 
-CREATE TABLE comment (
+CREATE TABLE IF NOT EXISTS comment (
                          id BIGINT PRIMARY KEY DEFAULT nextval('comment_seq'),
                          post_id BIGINT NOT NULL,
                          user_id BIGINT,
@@ -8,5 +8,5 @@ CREATE TABLE comment (
                          create_dt TIMESTAMP,
 
                          CONSTRAINT fk_comment_user FOREIGN KEY (user_id)
-                             REFERENCES "user"(id)
+                             REFERENCES users (id)
 );
