@@ -8,5 +8,5 @@ CREATE TABLE comment (
                          create_dt TIMESTAMP,
 
                          CONSTRAINT fk_comment_user FOREIGN KEY (user_id)
-                             REFERENCES "user"(id)
+                             REFERENCES users (id)
 );
